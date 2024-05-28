@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
+  password String
+  photo    String
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  productId Int?
+  Product   Product[]
+}
+
+model Product {
+  id         Int      @id @default(autoincrement())
+  category   Category @relation(fields: [categoryId], references: [id])
+  name       String
+  price      Int
+  photo      String
+  stockId    Int?
+  Sale       Sale[]
+  Order      Order[]
+  Stock      Stock[]
+  categoryId Int
+}
+
+model Client {
+  id    Int     @id @default(autoincrement())
+  name  String
+  photo String
+  Sale  Sale[]
+  Order Order[]
+}
+
+model Stock {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation(fields: [productId], references: [id])
+  amount    Int
+  hasstock  Boolean
+  productId Int
+}
+
+model Buy {
+  id      Int    @id @default(autoincrement())
+  name    String
+  amount  Int
+  price   Int
+  datebuy String
+}
+
+model Sale {
+  id        Int     @id @default(autoincrement())
+  client    Client  @relation(fields: [clientId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  amount    Int
+  price     Int
+  isPaid    Boolean
+  dateSale  String
+  clientId  Int
+  productId Int
+}
+
+model Order {
+  id        Int     @id @default(autoincrement())
+  client    Client  @relation(fields: [clientId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  amount    Int
+  price     Int
+  obs       String
+  clientId  Int
+  productId Int
+}
+
+model Recipe {
+  id          Int          @id @default(autoincrement())
+  nameproduct String
+  ingredients Ingredient[]
+  preparation String
+  cooking     String
+}
+
+model Ingredient {
+  id         Int     @id @default(autoincrement())
+  name       String
+  amount     String
+  conditions String
+  Recipe     Recipe? @relation(fields: [recipeId], references: [id])
+  recipeId   Int?
+}
