@@ -14,12 +14,16 @@ export async function categoryRoutes(app: FastifyInstance) {
     const categoryParamSchema = z.object({
       name: z.string()
     })
-    const body = categoryParamSchema.parse(request.params)
-    await prisma.category.create({
-      data: {
-        name: body.name
-      }
-    })
-    return reply.status(201).send()
+    const body = categoryParamSchema.parse(request.body)
+    try {
+      await prisma.category.create({
+        data: {
+          name: body.name
+        }
+      })
+      return reply.status(201).send()
+    } catch (error) {
+      return reply.send(error)
+    }
   })
 }

@@ -31,16 +31,19 @@ export async function userRoutes(app: FastifyInstance) {
       photo: z.string(),
     })
     const body = createUserBodySchema.parse(request.body)
-
-    await prisma.user.create({
-      data: {
-        email: body.email,
-        name: body.name,
-        password: body.password,
-        photo: body.photo
-      }
-    })
-    return reply.status(201).send()
+    try {
+      await prisma.user.create({
+        data: {
+          email: body.email,
+          name: body.name,
+          password: body.password,
+          photo: body.photo
+        }
+      })
+      return reply.status(201).send()
+    } catch (error) {
+      return reply.send(error)
+    }
   })
 
   // app.put('/', async (request: FastifyRequest, reply: FastifyReply) => {

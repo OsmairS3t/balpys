@@ -10,8 +10,7 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Category" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "name" TEXT NOT NULL,
-    "productId" INTEGER
+    "name" TEXT NOT NULL
 );
 
 -- CreateTable
