@@ -47,6 +47,10 @@ app.register(ingredientRoutes, {
   prefix: 'ingredients',
 })
 
-app.listen({ port: 2323, host: '192.168.1.93' }).then(() => {
+// app.listen({ port: 2323, host: '192.168.1.93' }).then(() => {
+//   console.log('HTTP Server Running at port 2323!')
+// })
+
+app.listen({ port: 2323 }).then(() => {
   console.log('HTTP Server Running at port 2323!')
 })

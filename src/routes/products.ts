@@ -6,7 +6,11 @@ const prisma = new PrismaClient()
 
 export async function productRoutes(app: FastifyInstance) {
   app.get('/', async() => {
-    const products = prisma.product.findMany()
+    const products = prisma.product.findMany({
+      include: {
+        category: true
+      }
+    })
     return products
   })
 
