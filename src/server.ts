@@ -1,4 +1,4 @@
-import fastify from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 import { userRoutes } from "./routes/users";
 import { categoryRoutes } from "./routes/categories";
 import { productRoutes } from "./routes/products";
@@ -9,7 +9,7 @@ import { stockRoutes } from "./routes/stocks";
 import { recipeRoutes } from "./routes/recipe";
 import { ingredientRoutes } from "./routes/ingredient";
 
-const app = fastify({ logger: true })
+const app:FastifyInstance = fastify({ logger: true })
 
 app.register(userRoutes, {
   prefix: 'users',

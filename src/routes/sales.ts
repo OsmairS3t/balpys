@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const prisma = new PrismaClient()
 
-export async function saleRoutes(app: FastifyInstance) {
+export async function saleRoutes(app: any) {
   app.get('/', async () => {
     const sales = await prisma.sale.findMany()
     return sales;

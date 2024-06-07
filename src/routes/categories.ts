@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 const prisma = new PrismaClient()
 
-export async function categoryRoutes(app: FastifyInstance) {
+export async function categoryRoutes(app: any) {
   app.get('/', async() => {
     const categories = prisma.category.findMany()
     return categories
@@ -24,6 +24,26 @@ export async function categoryRoutes(app: FastifyInstance) {
       return reply.status(201).send()
     } catch (error) {
       return reply.send(error)
+    }
+  })
+
+  app.put('/', async(request: FastifyRequest, reply: FastifyReply) => {
+    const categoryBodySchema = z.object({
+      id: z.number(),
+      name: z.string()
+    })
+    const body = categoryBodySchema.parse(request.body)
+    try {
+      await prisma.category.update({
+        where: {
+          id: body.id,
+        },
+        data: {
+          name: body.name,
+        }
+      })
+    } catch (error) {
+      throw error
     }
   })
 }
